@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://40w0g23isyvh"]
+
+[ext_resource type="Texture2D" uid="uid://t37a7loax337" path="res://Assets/textures/bg.png" id="1_liktm"]
+[ext_resource type="PackedScene" uid="uid://tfbr3j2ai0ta" path="res://Scenes/spaceship.tscn" id="2_ge0jq"]
+
+[node name="Game" type="Node2D"]
+position = Vector2(-3, 467)
+
+[node name="Background" type="TextureRect" parent="."]
+offset_left = -63.0
+offset_top = -507.0
+offset_right = 1215.0
+offset_bottom = 215.0
+texture = ExtResource("1_liktm")
+stretch_mode = 1
+
+[node name="Spaceship" parent="." instance=ExtResource("2_ge0jq")]
+position = Vector2(152, -233)
+rotation = 1.57317
