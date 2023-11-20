@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://40w0g23isyvh"]
+[gd_scene load_steps=9 format=3 uid="uid://40w0g23isyvh"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gmsib"]
 [ext_resource type="Texture2D" uid="uid://t37a7loax337" path="res://Assets/textures/bg.png" id="1_liktm"]
 [ext_resource type="PackedScene" uid="uid://tfbr3j2ai0ta" path="res://Scenes/spaceship.tscn" id="2_ge0jq"]
+[ext_resource type="PackedScene" uid="uid://cwcwni7vlly88" path="res://Scenes/hud.tscn" id="2_vnjd1"]
 [ext_resource type="PackedScene" uid="uid://da515lyud2pqi" path="res://Scenes/enemy_spawner.tscn" id="4_jr687"]
+[ext_resource type="AudioStream" uid="uid://c0iwhanwroxrn" path="res://Assets/audio/hit.wav" id="6_lhxex"]
+[ext_resource type="AudioStream" uid="uid://c6heas6u6i83n" path="res://Assets/audio/explode.wav" id="7_jnqo5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_emddt"]
 size = Vector2(356.75, 2418)
@@ -11,6 +14,10 @@ size = Vector2(356.75, 2418)
 [node name="Game" type="Node2D"]
 position = Vector2(-3, 467)
 script = ExtResource("1_gmsib")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("2_vnjd1")]
 
 [node name="Background" type="TextureRect" parent="."]
 offset_left = -63.0
@@ -37,4 +44,11 @@ collision_mask = 2
 position = Vector2(-276.625, -193)
 shape = SubResource("RectangleShape2D_emddt")
 
+[node name="EnemyHitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_lhxex")
+
+[node name="PlayerTakeDamageSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_jnqo5")
+
 [connection signal="took_damage" from="Spaceship" to="." method="_on_spaceship_took_damage"]
+[connection signal="enemy_spawned" from="EnemySpawner" to="." method="_on_enemy_spawner_enemy_spawned"]

@@ -8,22 +8,22 @@ script = ExtResource("1_mcab8")
 [node name="Positions" type="Node2D" parent="."]
 
 [node name="Spawn01" type="Marker2D" parent="Positions"]
-position = Vector2(1221, -150)
+position = Vector2(1222, -418)
 
 [node name="Spawn02" type="Marker2D" parent="Positions"]
-position = Vector2(1227, 240)
+position = Vector2(1228, -28)
 
 [node name="Spawn03" type="Marker2D" parent="Positions"]
-position = Vector2(1224, 149)
+position = Vector2(1225, -119)
 
 [node name="Spawn04" type="Marker2D" parent="Positions"]
-position = Vector2(1223, 75)
+position = Vector2(1224, -193)
 
 [node name="Spawn05" type="Marker2D" parent="Positions"]
-position = Vector2(1221, -3)
+position = Vector2(1222, -271)
 
 [node name="Spawn06" type="Marker2D" parent="Positions"]
-position = Vector2(1221, -78)
+position = Vector2(1222, -346)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

@@ -5,6 +5,7 @@ signal took_damage
 var speed = 200
 var blast_scene = preload("res://Scenes/blasters.tscn")
 @onready var blaster_container = get_node("BlasterContainer")
+@onready var blaster_sound = $BlasterSound
 
 func _process(delta):
 	if Input.is_action_just_pressed("shoot"):
@@ -39,6 +40,7 @@ func _physics_process(delta):
 func shoot():
 	var blaster_instance = blast_scene.instantiate()
 	blaster_container.add_child(blaster_instance)
+	blaster_sound.play()
 	blaster_instance.global_position = global_position
 	blaster_instance.global_position.y += 28
 

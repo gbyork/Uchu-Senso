@@ -1,15 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://tfbr3j2ai0ta"]
+[gd_scene load_steps=10 format=3 uid="uid://tfbr3j2ai0ta"]
 
 [ext_resource type="Script" path="res://Scripts/spaceship.gd" id="1_0l5lh"]
 [ext_resource type="Texture2D" uid="uid://d4ki70oqo5fxc" path="res://Assets/kenney_simple-space/PNG/Default/ship_sidesC.png" id="1_go1h5"]
+[ext_resource type="AudioStream" uid="uid://4on1tb5dd0ke" path="res://Assets/audio/sfx_laser2.wav" id="3_x3dy6"]
+
+[sub_resource type="Gradient" id="Gradient_bjk7u"]
+offsets = PackedFloat32Array(0, 0.540741, 1)
+colors = PackedColorArray(1, 1, 1, 0.482353, 1, 1, 1, 1, 1, 1, 1, 0.494118)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g16lx"]
+gradient = SubResource("Gradient_bjk7u")
+
+[sub_resource type="Curve" id="Curve_6v2h3"]
+_data = [Vector2(0.0060241, 0.515789), 0.0, 0.0, 0, 0, Vector2(1, 0.989474), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6tm35"]
+curve = SubResource("Curve_6v2h3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dpoq3"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 10, 1)
+particle_flag_disable_z = true
+spread = 30.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = -200.0
+initial_velocity_max = -200.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_6tm35")
+color_ramp = SubResource("GradientTexture1D_g16lx")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c5ekg"]
 radius = 25.02
 
 [node name="Spaceship" type="CharacterBody2D"]
 position = Vector2(-2, 3)
+rotation = 1.58262
 collision_mask = 2
 script = ExtResource("1_0l5lh")
+
+[node name="FlameParticleEffect" type="GPUParticles2D" parent="."]
+position = Vector2(28.5893, 49.6654)
+rotation = -1.586
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_dpoq3")
+lifetime = 0.2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(29, 27)
@@ -20,3 +58,6 @@ position = Vector2(30, 29)
 shape = SubResource("CircleShape2D_c5ekg")
 
 [node name="BlasterContainer" type="Node" parent="."]
+
+[node name="BlasterSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_x3dy6")
