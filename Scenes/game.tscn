@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://40w0g23isyvh"]
+[gd_scene load_steps=6 format=3 uid="uid://40w0g23isyvh"]
 
+[ext_resource type="Script" path="res://Scripts/game.gd" id="1_gmsib"]
 [ext_resource type="Texture2D" uid="uid://t37a7loax337" path="res://Assets/textures/bg.png" id="1_liktm"]
 [ext_resource type="PackedScene" uid="uid://tfbr3j2ai0ta" path="res://Scenes/spaceship.tscn" id="2_ge0jq"]
+[ext_resource type="PackedScene" uid="uid://da515lyud2pqi" path="res://Scenes/enemy_spawner.tscn" id="4_jr687"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emddt"]
+size = Vector2(356.75, 2418)
 
 [node name="Game" type="Node2D"]
 position = Vector2(-3, 467)
+script = ExtResource("1_gmsib")
 
 [node name="Background" type="TextureRect" parent="."]
 offset_left = -63.0
@@ -15,5 +21,20 @@ texture = ExtResource("1_liktm")
 stretch_mode = 1
 
 [node name="Spaceship" parent="." instance=ExtResource("2_ge0jq")]
-position = Vector2(152, -233)
+position = Vector2(129, -228)
 rotation = 1.57317
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_jr687")]
+position = Vector2(325, -200)
+rotation = -0.00124645
+
+[node name="EnemyEraser" type="Area2D" parent="."]
+z_index = 10
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyEraser"]
+position = Vector2(-276.625, -193)
+shape = SubResource("RectangleShape2D_emddt")
+
+[connection signal="took_damage" from="Spaceship" to="." method="_on_spaceship_took_damage"]

@@ -1,10 +1,18 @@
 extends CharacterBody2D
 
+signal took_damage
+
 var speed = 200
+var blast_scene = preload("res://Scenes/blasters.tscn")
+@onready var blaster_container = get_node("BlasterContainer")
+
+func _process(delta):
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
 
 func _process_input():
 	velocity = Vector2()
-	
+
 	if Input.is_action_pressed("moveUp"):
 		velocity.y = -speed
 	elif Input.is_action_pressed("moveDown"):
@@ -14,7 +22,7 @@ func _process_input():
 		velocity.x = -speed
 	elif Input.is_action_pressed("moveRight"):
 		velocity.x = speed
-		
+
 func _process_border(delta):
 	var new_position = global_position + velocity * delta
 	var screensize = get_viewport_rect().size
@@ -27,5 +35,17 @@ func _physics_process(delta):
 	_process_border(delta)
 	move_and_slide()
 
+
+func shoot():
+	var blaster_instance = blast_scene.instantiate()
+	blaster_container.add_child(blaster_instance)
+	blaster_instance.global_position = global_position
+	blaster_instance.global_position.y += 28
+
+func take_damage():
+	emit_signal("took_damage")
+
+func die():
+	queue_free()
 
 
