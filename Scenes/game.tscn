@@ -52,3 +52,4 @@ stream = ExtResource("7_jnqo5")
 
 [connection signal="took_damage" from="Spaceship" to="." method="_on_spaceship_took_damage"]
 [connection signal="enemy_spawned" from="EnemySpawner" to="." method="_on_enemy_spawner_enemy_spawned"]
+[connection signal="path_enemy_spawned" from="EnemySpawner" to="." method="_on_enemy_spawner_path_enemy_spawned"]

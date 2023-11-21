@@ -8,24 +8,29 @@ script = ExtResource("1_mcab8")
 [node name="Positions" type="Node2D" parent="."]
 
 [node name="Spawn01" type="Marker2D" parent="Positions"]
-position = Vector2(1222, -418)
+position = Vector2(1212, -617)
 
 [node name="Spawn02" type="Marker2D" parent="Positions"]
-position = Vector2(1228, -28)
+position = Vector2(1218, -227)
 
 [node name="Spawn03" type="Marker2D" parent="Positions"]
-position = Vector2(1225, -119)
+position = Vector2(1215, -318)
 
 [node name="Spawn04" type="Marker2D" parent="Positions"]
-position = Vector2(1224, -193)
+position = Vector2(1214, -392)
 
 [node name="Spawn05" type="Marker2D" parent="Positions"]
-position = Vector2(1222, -271)
+position = Vector2(1212, -470)
 
 [node name="Spawn06" type="Marker2D" parent="Positions"]
-position = Vector2(1222, -346)
+position = Vector2(1212, -545)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
 [node name="EnemyContainer" type="Node" parent="."]
+
+[node name="PathEnemyTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="PathEnemyTimer" to="." method="_on_path_enemy_timer_timeout"]
