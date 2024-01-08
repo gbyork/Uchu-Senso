@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://40w0g23isyvh"]
+[gd_scene load_steps=8 format=3 uid="uid://40w0g23isyvh"]
 
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_gmsib"]
 [ext_resource type="Texture2D" uid="uid://t37a7loax337" path="res://Assets/textures/bg.png" id="1_liktm"]
-[ext_resource type="PackedScene" uid="uid://tfbr3j2ai0ta" path="res://Scenes/spaceship.tscn" id="2_ge0jq"]
 [ext_resource type="PackedScene" uid="uid://cwcwni7vlly88" path="res://Scenes/hud.tscn" id="2_vnjd1"]
 [ext_resource type="PackedScene" uid="uid://da515lyud2pqi" path="res://Scenes/enemy_spawner.tscn" id="4_jr687"]
 [ext_resource type="AudioStream" uid="uid://c0iwhanwroxrn" path="res://Assets/audio/hit.wav" id="6_lhxex"]
@@ -27,10 +26,6 @@ offset_bottom = 215.0
 texture = ExtResource("1_liktm")
 stretch_mode = 1
 
-[node name="Spaceship" parent="." instance=ExtResource("2_ge0jq")]
-position = Vector2(129, -228)
-rotation = 1.57317
-
 [node name="EnemySpawner" parent="." instance=ExtResource("4_jr687")]
 position = Vector2(325, -200)
 rotation = -0.00124645
@@ -50,6 +45,56 @@ stream = ExtResource("6_lhxex")
 [node name="PlayerTakeDamageSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_jnqo5")
 
-[connection signal="took_damage" from="Spaceship" to="." method="_on_spaceship_took_damage"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="MainMenu" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 260.0
+offset_top = 146.0
+offset_right = -260.0
+offset_bottom = -146.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="MenuPanel" type="PanelContainer" parent="CanvasLayer/MainMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/MenuPanel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter Address To Join"
+alignment = 1
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/spaceship.tscn", "res://Scenes/blasters.tscn", "res://Scenes/enemy_spawner.tscn", "res://Scenes/enemy.tscn", "res://Scenes/pathenemy.tscn")
+spawn_path = NodePath("..")
+
 [connection signal="enemy_spawned" from="EnemySpawner" to="." method="_on_enemy_spawner_enemy_spawned"]
 [connection signal="path_enemy_spawned" from="EnemySpawner" to="." method="_on_enemy_spawner_path_enemy_spawned"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MenuPanel/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MenuPanel/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]

@@ -1,11 +1,16 @@
 extends Node2D
-@onready var spaceship = $Spaceship
 @onready var EnemyEraser = $EnemyEraser
 @onready var hud = $UI/HUD
 @onready var ui = $UI
 @onready var enemy_hit_sound = $EnemyHitSound
 @onready var player_take_damage_sound = $PlayerTakeDamageSound
+@onready var main_menu = $CanvasLayer/MainMenu/MenuPanel
+@onready var address_entry = $CanvasLayer/MainMenu/MenuPanel/VBoxContainer/AddressEntry
+
+const PORT = 9999
+var enet_peer = ENetMultiplayerPeer.new()
 var gos_scene = preload("res://Scenes/game_over_screen.tscn")
+var spaceship = preload("res://Scenes/spaceship.tscn")
 var lives = 3
 var score = 0
 
@@ -43,3 +48,24 @@ func _on_enemy_spawner_path_enemy_spawned(path_enemy_instance):
 	add_child(path_enemy_instance)
 	path_enemy_instance.enemy.connect("died", _on_enemy_died)
 	
+
+
+func _on_host_button_pressed():
+	main_menu.hide()
+	
+	enet_peer.create_server(PORT)
+	multiplayer.multiplayer_peer = enet_peer
+	multiplayer.peer_connected.connect(add_player)
+	add_player(multiplayer.get_unique_id())
+	
+func _on_join_button_pressed():
+	main_menu.hide()
+	
+	enet_peer.create_client("localhost",PORT)
+	multiplayer.multiplayer_peer = enet_peer
+	
+func add_player(peer_id):
+	var spaceship = spaceship.instantiate()
+	spaceship.name = str(peer_id)
+	add_child(spaceship)
+

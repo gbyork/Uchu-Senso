@@ -7,11 +7,19 @@ var blast_scene = preload("res://Scenes/blasters.tscn")
 @onready var blaster_container = get_node("BlasterContainer")
 @onready var blaster_sound = $BlasterSound
 
+func _enter_tree():
+	set_multiplayer_authority(str(name).to_int())
+
+func _ready():
+	if not is_multiplayer_authority(): return
+
 func _process(delta):
+	if not is_multiplayer_authority(): return
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
 
 func _process_input():
+	if not is_multiplayer_authority(): return
 	velocity = Vector2()
 
 	if Input.is_action_pressed("moveUp"):
@@ -35,7 +43,6 @@ func _physics_process(delta):
 	_process_input()
 	_process_border(delta)
 	move_and_slide()
-
 
 func shoot():
 	var blaster_instance = blast_scene.instantiate()
